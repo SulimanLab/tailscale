@@ -12,7 +12,8 @@ import (
 	"path/filepath"
 	"strings"
 
-	"tailscale.com/cmd/tailscale/cli"
+	cc "tailscale.com/cmd/tailscale/cli"
+	"tailscale.com/cmd/tailscale/new-cli"
 )
 
 func main() {
@@ -21,6 +22,10 @@ func main() {
 		args = []string{"web", "-cgi"}
 	}
 	if err := cli.Run(args); err != nil {
+		fmt.Fprintln(os.Stderr, err)
+		os.Exit(1)
+	}
+	if err := cc.Run(args); err != nil {
 		fmt.Fprintln(os.Stderr, err)
 		os.Exit(1)
 	}
